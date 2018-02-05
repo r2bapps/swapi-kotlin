@@ -1,0 +1,89 @@
+/*
+ * Copyright (c) 2018.
+ *
+ * No permission is granted to any person to copy, modify, disseminate, publish,
+ * distribute, sublicense and / or sell this software and associated documentation
+ * files (the "Software").
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+    defaultConfig {
+        applicationId "apps.r2b.swapi"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+
+        test.java.srcDirs += 'src/test/kotlin'
+        test.assets.srcDirs += 'src/sharedTest/assets'
+
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+        androidTest.assets.srcDirs += 'src/sharedTest/assets'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*'
+    }
+
+}
+
+ext.anko_version = '0.10.4'
+ext.support_version = '27.0.2'
+ext.retrofit_version = '2.3.0'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.android.support:appcompat-v7:$support_version"
+    implementation "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    implementation "com.android.support:recyclerview-v7:$support_version"
+    implementation "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
+    implementation "org.jetbrains.anko:anko-recyclerview-v7-coroutines:$anko_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
+    implementation 'io.reactivex:rxkotlin:2.0.0-RC1'
+    implementation 'com.github.aartikov.Alligator:alligator:2.0.0'
+    annotationProcessor 'com.github.aartikov.Alligator:alligator-compiler:2.0.0'
+
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:1.5.0"
+
+    androidTestImplementation 'com.nhaarman:mockito-kotlin:1.5.0'
+    androidTestImplementation 'org.mockito:mockito-android:2.11.0'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+}
